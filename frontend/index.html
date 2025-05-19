@@ -3,17 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <title>ASCII Video Filter</title>
+  <link href="style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="app.js" defer></script>
 </head>
 <body>
-  <h1>Upload a Video</h1>
+  <h1 class="bigTitle">Upload a Video</h1>
   <form id="uploadForm">
-    <input type="file" id="videoInput" accept="video/*" required />
-    <button type="submit">Upload</button>
+    <input type="file" id="videoInput" accept="video/*" hidden />
+    <label for="videoInput" class="uploadButton">+</label>
+    <button type="submit" class="submitButton">Convert</button>
   </form>
 
-  <h2>Returned Video:</h2>
-  <video id="outputVideo" controls></video>
+  <!-- <h2>Returned Video:</h2>
+  <video id="outputVideo" controls></video> -->
 
-  <script src="script.js"></script>
+  
 </body>
 </html>
