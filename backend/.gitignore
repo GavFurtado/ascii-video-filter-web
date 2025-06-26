@@ -1,0 +1,6 @@
+node_modules/
+.env
+bin/
+lib/
+src/uploads/
+src/processed/

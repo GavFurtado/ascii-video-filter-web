@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>View Processed Video</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+
+  <div class="video-wrapper">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Processed Video Preview</h1>
+        <div id="video-container" class="flex justify-center items-center h-64 bg-gray-100 rounded-lg">
+            <!-- Loading Overlay -->
+            <div id="loading-overlay" class="loading-overlay">
+                <div class="spinner"></div>
+                <p class="loading-text">Processing video...</p>
+            </div>
+            <!-- Video element will be appended here by JS -->
+        </div>
+    </div>
+  <script>
+    // const params = new URLSearchParams("E:\odin 2.0\ascii-video-filter-web\backend\src\processed\WhatsApp Audio 2024-03-21 at 9.17.59 PM.mp4");
+    // const videoName = params.get('video');
+
+    // if (videoName) {
+      const container = document.getElementById('video-container');
+      const video = document.createElement('video');
+      video.controls = true;
+      video.src = `../processed/e0b5964910874b438ab56ad3f319b6c3.mp4`;
+      
+
+      container.innerHTML = '';
+      container.appendChild(video);
+
+      document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('video-container');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const video = document.createElement('video');
+            video.controls = true; // Show playback controls
+            video.autoplay = false; // Do not autoplay by default, user preference
+            video.loop = false; // Do not loop by default
+            video.muted = false; // Not muted by default
+            video.style.display = 'none'; // Initially hide the video until loaded
+
+            // The file name of your video.
+            const videoFileName = 'e0b5964910874b438ab56ad3f319b6c3.mp4';
+            // This path assumes `style.css` is in the same directory as your HTML file,
+            // and the `processed` folder is one level up from the HTML file's directory.
+            const videoPath = `../processed/${videoFileName}`; 
+
+            const source = document.createElement('source');
+            source.src = videoPath;
+            // Assuming the actual file is MP4. Always set the correct MIME type.
+            source.type = 'video/mp4'; 
+
+            video.appendChild(source);
+
+            // Fallback for browsers that don't support the video tag
+            video.innerHTML = 'Your browser does not support the video tag.';
+
+            // Append video to container below the loading overlay
+            container.appendChild(video);
+
+            // Hide loading overlay and show video when it can play through
+            video.addEventListener('canplaythrough', () => {
+                console.log('Video can be played through! Hiding loading overlay.');
+                loadingOverlay.classList.add('hidden');
+                video.style.display = 'block'; // Show the video
+            });
+          });
+    // } else {
+    //   document.getElementById('video-container').innerText = "No video provided.";
+    // }
+  </script>
+</body>
+</html>
