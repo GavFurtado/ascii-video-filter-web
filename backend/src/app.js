@@ -56,7 +56,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
     const args = [
         "-i", inputPath,
         "-o", outputPath,
-        "-f", fontPath
+        "-f", fontPath,
     ];
 
     if (colorEnabled === "false") {
@@ -65,7 +65,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
 
     // Step 4: Spawn child process with env + shell
     const options = {
-        shell: true,
+        shell: isWindows,
         env: {
             ...process.env,
             PATH: `${path.join(__dirname, "lib")};${process.env.PATH}`
