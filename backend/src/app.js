@@ -37,22 +37,34 @@ app.post("/upload", upload.single("file"), (req, res) => {
         return res.status(400).send("Missing configuration.");
     }
 
-    // Step 2: Build paths
-    const inputPath = req.file.path;
-    const outputFileName = `output-${Date.now()}.mp4`;
-    const outputPath = path.join(__dirname, "processed", outputFileName);
-    const binaryName = isWindows ? "AsciiVideoFilter.exe" : "AsciiVideoFilter";
-    const executablePath = path.join(__dirname, "../bin", binaryName);
-    console.log(`inputPath: ${inputPath}`)
-    console.log(`outputFileName: ${outputFileName}`)
-    console.log(`outputPath: ${outputPath}`)
-    console.log(`executablePath: ${executablePath}`)
-
-    // Step 3: Build args
     if (typeof font !== 'string' || !(font in fontFileName)) { // if not a supported/invalid font
         return res.status(400).send("Invalid Configuration Options.")
     }
-    const fontPath = path.join(__dirname, "assets", `${fontFileName[font]}`);
+    // Step 2: Build paths
+    let inputPath;
+    let outputFileName = `output-${Date.now()}.mp4`;
+    let outputPath;
+    let binaryName = isWindows ? "AsciiVideoFilter.exe" : "AsciiVideoFilter";
+    let executablePath;
+    let fontPath;
+
+    if (!isWindows) {
+        inputPath = req.file.path;
+        outputPath = path.join(__dirname, "processed", outputFileName);
+        executablePath = path.join(__dirname, "../bin", binaryName);
+    } else {
+        inputPath = `"${req.file.path}"`;  // quoting for Windows shell
+        outputPath = `"${path.join(__dirname, "processed", outputFileName)}"`;
+        executablePath = `"${path.join(__dirname, "../bin", binaryName)}"`;
+    }
+
+    // Debug logging
+    console.log("inputPath:", inputPath);
+    console.log("outputFileName:", outputFileName);
+    console.log("outputPath:", outputPath);
+    console.log("executablePath:", executablePath);
+
+    // Step 3: Build args
     const args = [
         "-i", inputPath,
         "-o", outputPath,
@@ -63,13 +75,13 @@ app.post("/upload", upload.single("file"), (req, res) => {
         args.push("--no-colour");
     }
 
-    // Step 4: Spawn child process with env + shell
+    // Step 4: Options
     const options = {
         shell: isWindows,
         env: {
             ...process.env,
-            PATH: `${path.join(__dirname, "lib")};${process.env.PATH}`
-        }
+            PATH: `${path.join(__dirname, "lib")}${isWindows ? ";" : ":"}${process.env.PATH}`,
+        },
     };
 
     console.log(`Running command: ${executablePath} ${args.join(" ")}`);
