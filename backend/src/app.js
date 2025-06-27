@@ -57,6 +57,11 @@ app.post("/upload", upload.single("file"), (req, res) => {
         "RobotoMono": "RobotoMono-Bold.ttf",
         "RubikMono": "RubikMonoOne-Regular.ttf"
     }
+    const charsets = {
+        "Detailed": "detailed",
+        "Standard": "standard",
+        "Binary": "binary",
+    }
     const isWindows = process.platform === "win32";
 
     // Generate unique session ID
@@ -68,14 +73,17 @@ app.post("/upload", upload.single("file"), (req, res) => {
         return res.status(400).send("No file uploaded.");
     }
 
-    const { colors: colorEnabled, fonts: font } = req.body;
+    const { colors: colorEnabled, fonts: font, characterSet } = req.body;
     if (typeof colorEnabled === "undefined" || !font) {
         console.error("Missing configuration (colorEnabled/font).");
-        console.error(`COLOR: ${colorEnabled}, FONTS: ${font}`);
+        console.error(`COLOR: ${colorEnabled}, FONTS: ${font}, CHARSET: ${characterSet}`);
         return res.status(400).send("Missing configuration.");
     }
 
     if (typeof font !== 'string' || !(font in fontFileName)) {
+        return res.status(400).send("Invalid Configuration Options.")
+    }
+    if (typeof font !== 'string' || !(characterSet in charsets)) {
         return res.status(400).send("Invalid Configuration Options.")
     }
 
@@ -102,6 +110,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
         "-i", inputPath,
         "-o", outputPath,
         "-f", fontPath,
+        "-p", charsets[characterSet]
     ];
 
     if (colorEnabled === "false") {
