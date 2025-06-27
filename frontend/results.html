@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video Processing Complete</title>
+  <link href="style.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="results-container">
+    <div class="success-icon">✓</div>
+    <h1 class="bigTitle">Video Processing Complete!</h1>
+    <p class="results-text">Your ASCII video has been successfully processed and is ready to view.</p>
+    
+    <div class="action-buttons">
+      <a id="viewVideoBtn" href="#" class="view-button" target="_blank">
+        <span class="button-icon">🎬</span>
+        View Video
+      </a>
+      
+      <a id="downloadBtn" href="#" class="download-button" download>
+        <span class="button-icon">⬇️</span>
+        Download Video
+      </a>
+    </div>
+    
+    <div class="secondary-actions">
+      <a href="index.html" class="back-button">
+        <span class="button-icon">←</span>
+        Process Another Video
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Get video filename from URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const videoName = params.get('video');
+
+    if (videoName) {
+      // Set up view button to open backend video viewer
+      const viewBtn = document.getElementById('viewVideoBtn');
+      viewBtn.href = `http://localhost:8080/view?video=${encodeURIComponent(videoName)}`;
+      
+      // Set up download button
+      const downloadBtn = document.getElementById('downloadBtn');
+      downloadBtn.href = `http://localhost:8080/processed/${videoName}`;
+      downloadBtn.download = videoName;
+    } else {
+      // If no video name, redirect back to upload page
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
