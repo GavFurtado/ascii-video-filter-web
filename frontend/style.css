@@ -73,15 +73,26 @@ form{
 }
 
 .options{
-  align-items: center;
-  justify-items: center;
+    padding: 0;
+    margin: 0;
+  align-items: left;
+  justify-items: left;
+  display: flex;
+  flex-direction: column;
+}
+span{
+    padding:1rem;
+    position:relative;
+    
 }
 
 .toggle-container {
-      display: flex;
-      align-items: center;
+        padding: 0;
+        margin: 0;
+        padding-bottom: 1rem;
+      position:relative;
       gap: 10px;
-      padding:1rem;
+      
       font-family: sans-serif;
     }
 

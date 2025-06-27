@@ -4,8 +4,9 @@ const videoInput = document.querySelector('#videoInput');
 const label = document.querySelector('.uploadButton');
 const colors = document.getElementById('colorToggle');
 const fonts = document.querySelector('.custom-select');
-
+const charSet = document.querySelector('#charSet')
 // Enhanced loading state management with progress
+
 const showLoading = () => {
     const loadingDiv = document.createElement('div');
     loadingDiv.id = 'loading-overlay';
@@ -156,6 +157,7 @@ uploadForm.addEventListener('submit', async (e) => {
     dataForm.append('file', videoInput.files[0]);
     dataForm.append('colors', colors.checked);
     dataForm.append('fonts', fonts.value);
+    dataForm.append('charSet', charSet.value);
 
     // Show loading spinner
     showLoading();
