@@ -46,7 +46,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
     let outputPath;
     let binaryName = isWindows ? "AsciiVideoFilter.exe" : "AsciiVideoFilter";
     let executablePath;
-    let fontPath;
+    let fontPath = path.join(__dirname, "assets", fontFileName[font]);
 
     if (!isWindows) {
         inputPath = req.file.path;
@@ -63,6 +63,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
     console.log("outputFileName:", outputFileName);
     console.log("outputPath:", outputPath);
     console.log("executablePath:", executablePath);
+
 
     // Step 3: Build args
     const args = [
@@ -103,9 +104,8 @@ app.post("/upload", upload.single("file"), (req, res) => {
 });
 
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/processed', express.static(path.join(__dirname, 'processed')));
 app.get('/view', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'view.html'));
 });
-
 export default app;
