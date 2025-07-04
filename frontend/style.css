@@ -43,8 +43,8 @@ form{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 6rem;
-  height: 6rem;
+  width: 10rem;
+  height: 10rem;
   font-size: 4rem;
   background-color: #84A59D;
   font:#F4A261;
@@ -79,28 +79,33 @@ form{
   justify-items: left;
   display: flex;
   flex-direction: column;
+  
 }
-span{
-    padding:1rem;
-    position:relative;
+.option{
+    padding-top:1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 9rem;
     
+
 }
 
 .toggle-container {
-        padding: 0;
-        margin: 0;
-        padding-bottom: 1rem;
-      position:relative;
-      gap: 10px;
-      
+    
+     margin-top:2rem;
+     display: flex;
+     position: relative;
       font-family: sans-serif;
     }
 
     .switch {
-      position: relative;
+      position: absolute;
+      right:0;
       display: inline-block;
       width: 50px;
       height: 28px;
+      
     }
 
     .switch input {
@@ -140,8 +145,16 @@ span{
     input:checked + .slider:before {
       transform: translateX(22px);
     }
-
+.labelForFonts{
+    /* position: absolute;
+    left:0; */
+    text-align: center;
+    padding:1rem;
+}
 .custom-select {
+    /* position:absolute;
+    right:0; */
+    
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
