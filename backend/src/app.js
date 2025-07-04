@@ -73,13 +73,14 @@ app.post("/upload", upload.single("file"), (req, res) => {
         return res.status(400).send("No file uploaded.");
     }
 
-    const { colors: colorEnabled, fonts: font, characterSet } = req.body;
+    const { colors: colorEnabled, fonts: font, charSet: characterSet } = req.body;
     if (typeof colorEnabled === "undefined" || !font) {
         console.error("Missing configuration (colorEnabled/font).");
         console.error(`COLOR: ${colorEnabled}, FONTS: ${font}, CHARSET: ${characterSet}`);
         return res.status(400).send("Missing configuration.");
     }
 
+    console.log(`colorEnabled: ${colorEnabled} | font: ${font} | character set: ${characterSet}`)
     if (typeof font !== 'string' || !(font in fontFileName)) {
         return res.status(400).send("Invalid Configuration Options.")
     }
