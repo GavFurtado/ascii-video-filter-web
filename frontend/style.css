@@ -95,6 +95,7 @@ form{
     
      margin-top:2rem;
      display: flex;
+    align-items: center;
      position: relative;
       font-family: sans-serif;
     }
